@@ -1,28 +1,33 @@
-# SMA-D-DREAM Project Structure Description
+# Project Structure of the SMA_D_DREAM Framework
 
-The **SMA-D-DREAM** directory contains the core implementation of the proposed inverse modeling framework.  
-This project is built upon the **SPOTPY** (Statistical Parameter Optimization Tool for Python) package and extends its original DREAM algorithm.
+The project is organized into two parallel and complementary branches:  
+(1) the **SMA-D-DREAM inverse modeling framework**, and  
+(2) the **Transformer-based surrogate modeling module**.  
+
+Together, these components form a surrogate-assisted Bayesian inverse modeling system designed for computationally expensive groundwater inverse model.
+
+---
 
 ## Directory Structure
 
 - **SMA-D-DREAM/**
   - **spotpy/**
-    - Python package adapted and extended from the original SPOTPY library.
-    - Contains all necessary components for Bayesian inference and MCMC-based parameter estimation.
+    - Python package adapted and extended from the original **SPOTPY** library.
+    - Provides the core Bayesian inference and MCMC sampling infrastructure.
     - **algorithms/**
       - `Dream_2.py`
         - Implementation of the **D-DREAM** algorithm.
-        - This version introduces adaptive mechanisms based on convergence diagnostics and guided differential evolution.
+        - An enhanced Differential Evolution Adaptive Metropolis (DREAM) method with convergence-aware proposal adaptation and guided differential evolution.
       - `Dream_3.py`
         - Implementation of the proposed **SMA-D-DREAM framework**.
-        - Integrates surrogate model assistance with the D-DREAM algorithm to significantly improve computational efficiency while maintaining inversion accuracy.
+        - Extends D-DREAM by incorporating surrogate model assistance to reduce computational cost while preserving inversion accuracy.
 
-## Algorithm Roles
+- **Transformer_based_surrogate_model/**
+  - `GroundwaterTransformer.py`
+    - Implementation of a **Transformer-based surrogate model** for groundwater simulations.
+    - The model learns the nonlinear mapping between model parameters and groundwater state variables.
+    - Serves as a fast approximation of the high-fidelity numerical groundwater model during the inversion process.
 
-- **DREAM_2 (D-DREAM)**  
-  Implements an enhanced Differential Evolution Adaptive Metropolis algorithm 
+---
 
-- **DREAM_3 (SMA-D-DREAM Framework)**  
-  Extends D-DREAM by incorporating surrogate models to accelerate likelihood evaluations, forming a **surrogate model–assisted inverse modeling framework** suitable for computationally expensive numerical models.
-
-
+This parallel and modular design enables flexible replacement or upgrading of surrogate models and ensures the extensibility of the overall framework.
